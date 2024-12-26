@@ -6,6 +6,10 @@ using Microsoft.AspNetCore.Http;
 
 namespace FileModifier.Services
 {
+
+    /// <summary>
+    /// Provides services for file manipulation.
+    /// </summary>
     public class FileService
     {
         /// <summary>
@@ -23,6 +27,11 @@ namespace FileModifier.Services
             return Encoding.UTF8.GetBytes(mutatedContent);
         }
 
+        /// <summary>
+        /// Mutates the content by appending the current date and a random alphanumeric string.
+        /// </summary>
+        /// <param name="content">The original content.</param>
+        /// <returns>The mutated content.</returns>
         private string MutateContent(string content)
         {
             var currentDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
@@ -31,6 +40,11 @@ namespace FileModifier.Services
             return $"{content}{Environment.NewLine}Date: {currentDate}{Environment.NewLine}Random: {randomSequence}";
         }
 
+        /// <summary>
+        /// Generates a random alphanumeric string of the specified length.
+        /// </summary>
+        /// <param name="length">The length of the string to generate.</param>
+        /// <returns>A random alphanumeric string.</returns>
         private string GetRandomAlphanumericString(int length)
         {
             const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
