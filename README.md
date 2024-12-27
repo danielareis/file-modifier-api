@@ -24,8 +24,9 @@ FileModifierApi is a .NET 8 REST API that allows users to upload a text file, mu
 ## Project Structure
 
 - **FileModifierApi/Controllers/FileController.cs**: Contains the API endpoint for file upload and mutation.
-- **FileModifierApi/Services/FileService.cs**: Contains the logic for mutating the file content.
-- **FileModifier.Tests/FileServiceTests.cs**: Contains unit tests for the `FileService`.
+- **FileModifierApi/Commands/MutateFileCommand.cs**: Defines the command for file mutation.
+- **FileModifierApi/Handlers/MutateFileCommandHandler.cs**: Handles the file mutation command.
+- **FileModifier.Tests/MutateFileCommandHandlerTests.cs**: Contains unit tests for the `MutateFileCommandHandler`.
 
 ## Unit Tests
 

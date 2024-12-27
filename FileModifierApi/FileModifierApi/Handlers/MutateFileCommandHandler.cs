@@ -1,25 +1,25 @@
-using System;
-using System.IO;
+using FileModifier.Commands;
+using MediatR;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 
-namespace FileModifier.Services
+namespace FileModifier.Handlers
 {
-
     /// <summary>
-    /// Provides services for file manipulation.
+    /// Command handler for mutating a file.
     /// </summary>
-    public class FileService
+    public class MutateFileCommandHandler() : IRequestHandler<MutateFileCommand, byte[]>
     {
         /// <summary>
-        /// Mutates the content of the uploaded file.
+        /// Handles the file mutation command.
         /// </summary>
-        /// <param name="file">The file to mutate.</param>
+        /// <param name="request">The file mutation command request.</param>
+        /// <param name="cancellationToken">Cancellation token.</param>
         /// <returns>The mutated file content as a byte array.</returns>
-        public async Task<byte[]> MutateFileAsync(IFormFile file)
+        public async Task<byte[]> Handle(MutateFileCommand request, CancellationToken cancellationToken)
         {
-            using var reader = new StreamReader(file.OpenReadStream());
+            using var reader = new StreamReader(request.File.OpenReadStream());
             var content = await reader.ReadToEndAsync();
 
             var mutatedContent = MutateContent(content);

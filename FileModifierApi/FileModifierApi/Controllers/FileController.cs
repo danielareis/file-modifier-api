@@ -1,4 +1,5 @@
-using FileModifier.Services;
+using FileModifier.Commands;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FileModifier.Controllers
@@ -9,7 +10,7 @@ namespace FileModifier.Controllers
     /// <param name="fileService">Service for file manipulation.</param>
     [ApiController]
     [Route("api/[controller]")]
-    public class FileController(FileService fileService) : ControllerBase
+    public class FileController(IMediator mediator) : ControllerBase
     {
         /// <summary>
         /// Uploads a file, mutates its content, and returns the mutated file.
@@ -24,7 +25,8 @@ namespace FileModifier.Controllers
                 return BadRequest("No file uploaded.");
             }
 
-            var mutatedFile = await fileService.MutateFileAsync(file);
+            var command = new MutateFileCommand(file);
+            var mutatedFile = await mediator.Send(command);
 
             return File(mutatedFile, "application/octet-stream", "mutated_" + file.FileName);
         }
